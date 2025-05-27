@@ -1,0 +1,19 @@
+services:
+  postgis:
+    image: "postgis/postgis:17-3.5-alpine"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "gis"
+    volumes:
+      - "./data_src/:/data_src"
+      - "./pg_scripts/:/pg_scripts"
+      - "./confs/my-postgres.conf:/etc/postgresql/postgresql.conf"
+
